@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <time.h>
+#include "histogram.h"
 
 double Monte_Pi(int N,std::mt19937_64 &gen){
     //Setup random number generator
@@ -51,5 +52,17 @@ int main() {
         standardDeviation = sqrt(sum / (N_est - 1));
     std::cout<<"Your estimate of Pi is: "<< pi_avg/(double(N_est))<<"\n";
     std::cout<<"Standard deviation of Pi is: "<< sqrt(sum / (N_est - 1));
+
+    std::vector<double> bins;
+    std::vector<int> hist;
+
+    histogram(bins, hist, pis);
+
+    std::ofstream fout("hist.txt");
+    fout.precision(15);
+    for (size_t i = 0; i < bins.size(); ++i) {
+        fout << bins[i] << " " << hist[i] << "\n";
+    }
+    fout.close();
     return 0;
 }
